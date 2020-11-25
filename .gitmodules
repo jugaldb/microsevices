@@ -1,0 +1,6 @@
+[submodule "common-npm-package-microservices"]
+	path = common-npm-package-microservices
+	url = git@github.com:jugaldb/common-npm-package-microservices.git
+[submodule "ticketing/common-npm-package-microservices"]
+	path = ticketing/common-npm-package-microservices
+	url = git@github.com:jugaldb/common-npm-package-microservices.git
