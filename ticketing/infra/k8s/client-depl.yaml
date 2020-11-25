@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: stephengrider/client
+          image: jugaldb/client
 ---
 apiVersion: v1
 kind: Service

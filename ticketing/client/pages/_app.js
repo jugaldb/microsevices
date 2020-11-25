@@ -13,7 +13,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 
 AppComponent.getInitialProps = async appContext => {
   const client = buildClient(appContext.ctx);
-  const { data } = await client.get('/api/users/currentuser');
+  const { data } = await client.get('http://ingress-nginx-controller.kube-system.svc.cluster.local/api/users/currentuser');
 
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
