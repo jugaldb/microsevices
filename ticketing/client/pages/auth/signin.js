@@ -6,7 +6,7 @@ export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
-    url: 'http://ingress-nginx-controller.kube-system.svc.cluster.local/api/users/signin',
+    url: '/api/users/signin',
     method: 'post',
     body: {
       email,
