@@ -72,7 +72,7 @@ it('correct passwordt', async () => {
     .post('/api/users/signin')
     .send({
       email: 'test@test.com',
-      password: 'fspassworddfs'
+      password: 'password'
     })
     .expect(200);
 
