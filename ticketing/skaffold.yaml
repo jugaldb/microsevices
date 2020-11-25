@@ -8,11 +8,19 @@ build:
   local:
     push: false
   artifacts:
-    - image: jugaldb/auth
+    - image: stephengrider/auth
       context: auth
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.ts'
+            dest: .
+    - image: stephengrider/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
             dest: .
