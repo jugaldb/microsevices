@@ -5,10 +5,10 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-296604
   artifacts:
-    - image: jugaldb/auth
+    - image: us.gcr.io/ticketing-dev-296604/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: jugaldb/tickets
+    - image: us.gcr.io/ticketing-dev-296604/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: jugaldb/client
+    - image: us.gcr.io/ticketing-dev-296604/client
       context: client
       docker:
         dockerfile: Dockerfile

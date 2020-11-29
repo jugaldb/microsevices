@@ -28,6 +28,10 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 
+app.get('/api',(req, res) => {
+	res.send('hi')
+})
+
 app.all("*", async (req, res) => {
 	throw new NotFoundError();
 });

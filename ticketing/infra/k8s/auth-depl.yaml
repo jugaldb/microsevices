@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: jugaldb/auth
+          image: us.gcr.io/ticketing-dev-296604/auth
           env:
             - name: JWT_KEY
               valueFrom:
