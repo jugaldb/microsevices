@@ -16,13 +16,21 @@ spec:
         - name: tickets
           image: us.gcr.io/ticketing-dev-296604/tickets
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: MONGODB_URI
+              value: 'mongodb://tickets-mongo-srv:27017/tickets'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            - name: MONGODB_URI
-              value: mongodb://tickets-mongo-srv:27017/tickets
 ---
 apiVersion: v1
 kind: Service

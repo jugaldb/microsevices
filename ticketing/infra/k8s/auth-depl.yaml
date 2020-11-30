@@ -16,13 +16,13 @@ spec:
         - name: auth
           image: us.gcr.io/ticketing-dev-296604/auth
           env:
+            - name: MONGODB_URI
+              value: 'mongodb://auth-mongo-srv:27017/auth'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            - name: MONGODB_URI
-              value: mongodb://auth-mongo-srv:27017/auth
 ---
 apiVersion: v1
 kind: Service
