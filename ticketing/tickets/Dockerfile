@@ -1,6 +1,4 @@
-FROM node:12
-
-ENV CI=true
+FROM node:alpine
 
 WORKDIR /app
 COPY package.json .
