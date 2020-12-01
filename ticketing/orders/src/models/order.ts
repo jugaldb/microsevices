@@ -1,67 +1,76 @@
-import mongoose from "mongoose";
-import { OrderStatus } from "@jdbtickets/common";
-import { TicketDoc } from "./ticket";
-//Interface for describing properties on new Order
-
-export { OrderStatus }
+import mongoose from 'mongoose'
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current'
+ 
+import { OrderStatus } from '@jdbtickets/common'
+ 
+import { TicketDoc } from './ticket'
+ 
+// Look at comments in user model for detailed notes on types
+ 
 interface OrderAttrs {
-  userId: string;
-  status: OrderStatus;
-  expiresAt: Date;
-  ticket: TicketDoc;
+  userId: string
+  status: OrderStatus
+  expiresAt: Date
+  ticket: TicketDoc
 }
-
-//Interface describing Order model properties
-
+ 
+export interface OrderDoc extends mongoose.Document {
+  userId: string
+  status: OrderStatus
+  expiresAt: Date
+  ticket: TicketDoc
+  version: number
+}
+ 
 interface OrderModel extends mongoose.Model<OrderDoc> {
-  build(attrs: OrderAttrs): OrderDoc;
+  build(attrs: OrderAttrs): OrderDoc
 }
-
-//Interface describing Order document
-
-interface OrderDoc extends mongoose.Document {
-  userId: string;
-  status: OrderStatus;
-  expiresAt: Date;
-  ticket: TicketDoc;
-}
-
+ 
 const orderSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
-      trim: true,
       required: true,
     },
     status: {
       type: String,
-      trim: true,
       required: true,
+      // Even though our TS interfaces should catch if
+      // we don't pass a valid OrderStatus we should still
+      // set it up the mongoose way here. Using onvject.values to
+      // get the various enum options
       enum: Object.values(OrderStatus),
       default: OrderStatus.Created,
     },
     expiresAt: {
       type: mongoose.Schema.Types.Date,
     },
+    // Creating a reference to another mongoose collection
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Ticket",
+      ref: 'Ticket',
     },
   },
   {
     toJSON: {
-      transform(doc: any, ret: any) {
-        ret.id = ret._id;
-        delete ret._id;
+      transform(doc, ret) {
+        ret.id = ret._id
+        delete ret._id
       },
     },
   }
-);
-
+)
+ 
+// Using our own 'version' field rather than the default __V for nicer formatted events etc
+orderSchema.set('versionKey', 'version')
+ 
+// wire up the update if current plugin for optimistic concurrency control
+orderSchema.plugin(updateIfCurrentPlugin)
+ 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
-  return new Order(attrs);
-};
-
-const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
-
-export { Order };
+  return new Order(attrs)
+}
+ 
+const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema)
+ 
+export { Order, OrderStatus }

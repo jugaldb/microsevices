@@ -65,6 +65,7 @@ router.post(
         id: ticket.id,
         price: ticket.price,
       },
+      version: order.version
     });
 
     // Publish an event saying that an order was created
