@@ -2,7 +2,7 @@ import {
   Subjects,
   Publisher,
   ExpirationCompleteEvent,
-} from '@jdbtickets/common';
+} from '@sgtickets/common';
 
 export class ExpirationCompletePublisher extends Publisher<
   ExpirationCompleteEvent
